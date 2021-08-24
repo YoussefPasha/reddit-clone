@@ -1,4 +1,3 @@
-import { IsEmail, Length } from "class-validator";
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -9,8 +8,9 @@ import {
   UpdateDateColumn,
   BeforeInsert,
 } from "typeorm";
-import bcrypt from "bcrypt";
+import { IsEmail, Length } from "class-validator";
 import { classToPlain, Exclude } from "class-transformer";
+import bcrypt from "bcrypt";
 
 @Entity("users")
 export class User extends BaseEntity {
@@ -19,8 +19,8 @@ export class User extends BaseEntity {
     Object.assign(this, user);
   }
 
-  @Exclude()
   @PrimaryGeneratedColumn()
+  @Exclude({ toPlainOnly: true })
   id: number;
 
   @Index()
@@ -35,9 +35,9 @@ export class User extends BaseEntity {
   @Column({ unique: true })
   username: string;
 
-  @Exclude()
-  @Length(6)
+  @Length(6, 255)
   @Column()
+  @Exclude({ toPlainOnly: true })
   password: string;
 
   @CreateDateColumn()
@@ -51,7 +51,7 @@ export class User extends BaseEntity {
     this.password = await bcrypt.hash(this.password, 6);
   }
 
-  toJson() {
+  toJSON() {
     return classToPlain(this);
   }
 }
