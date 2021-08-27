@@ -5,8 +5,10 @@ import {
   ManyToOne,
   JoinColumn,
   BeforeInsert,
+  OneToMany,
 } from "typeorm";
 import { makeId, slugify } from "../utils/helpers";
+import Comment from "./Comment";
 import Entity from "./Entity";
 import Sub from "./Sub";
 import User from "./User";
@@ -36,6 +38,9 @@ export default class Post extends Entity {
   @ManyToOne(() => Sub, (sub) => sub.posts)
   @JoinColumn({ name: "subName", referencedColumnName: "name" })
   sub: Sub;
+
+  @OneToMany(() => Comment, (comment) => comment.post)
+  comments: Comment[];
 
   @Column({ nullable: true, type: "text" })
   body: string;
