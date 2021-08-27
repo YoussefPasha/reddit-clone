@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { makeId, slugify } from "../utils/helpers";
 import Entity from "./Entity";
+import Sub from "./Sub";
 import User from "./User";
 
 @TOENTITY("posts")
@@ -31,6 +32,10 @@ export default class Post extends Entity {
   @ManyToOne(() => User, (user) => user.posts)
   @JoinColumn({ name: "username", referencedColumnName: "username" })
   user: User;
+
+  @ManyToOne(() => Sub, (sub) => sub.posts)
+  @JoinColumn({ name: "subName", referencedColumnName: "name" })
+  sub: Sub;
 
   @Column({ nullable: true, type: "text" })
   body: string;
