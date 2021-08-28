@@ -14,6 +14,8 @@ const mappedErrors = (errors: Object[]) => {
   }, {});
 };
 
+let today = new Date();
+
 const register = async (req: Request, res: Response) => {
   const { email, username, password } = req.body;
   try {
@@ -57,7 +59,7 @@ const login = async (req: Request, res: Response) => {
     }
 
     const user = await User.findOne({ username });
-    if (!user) return res.status(404).json({ error: "Usr not Found" });
+    if (!user) return res.status(404).json({ username: "User not Found" });
     const passwordMatches = await bcrypt.compare(password, user.password);
     if (!passwordMatches)
       return res.status(401).json({ password: "Password is incorrect" });
@@ -71,6 +73,11 @@ const login = async (req: Request, res: Response) => {
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
         path: "/",
+        expires: new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate() + 7
+        ),
       })
     );
 
