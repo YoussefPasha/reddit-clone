@@ -1,7 +1,9 @@
-# Awesome Project Build with TypeORM
+# Readit a clone of Reddit
 
-Steps to run this project:
+## Diagram
 
-1. Run `npm i` command
-2. Setup database settings inside `ormconfig.json` file
-3. Run `npm start` command
+<div align="center">
+    <div>
+        <img src="https://github.com/YoussefPasha/reddit-clone/Digram.png" width = "80%" >
+    </div>
+</div>
