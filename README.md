@@ -1,6 +1,6 @@
 # Readit a clone of Reddit
 
-## Diagram
+## ERD
 
 <div align="center">
     <div>
