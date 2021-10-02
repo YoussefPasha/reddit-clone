@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import { useRouter } from "next/router";
 
 import "../styles/tailwind.css";
+import "../styles/icons.css";
 import { Fragment } from "react";
 
 axios.defaults.baseURL = "http://localhost:5001/api";
