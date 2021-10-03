@@ -6,7 +6,6 @@ import { AuthProvider } from "../context/auth";
 
 import "../styles/tailwind.css";
 import "../styles/icons.css";
-import { Fragment } from "react";
 
 axios.defaults.baseURL = "http://localhost:5001/api";
 axios.defaults.withCredentials = true;

@@ -1,9 +1,11 @@
-import { createContext, useContext, useReducer } from "react";
+import axios from "axios";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import { User } from "../types";
 
 interface State {
   authenticated: boolean;
   user: User | undefined;
+  loading: boolean;
 }
 
 interface Action {
@@ -14,6 +16,7 @@ interface Action {
 const StateContext = createContext<State>({
   authenticated: false,
   user: null,
+  loading: true,
 });
 
 const DispatchContext = createContext(null);
@@ -32,16 +35,30 @@ const reducer = (state: State, { type, payload }: Action) => {
         authenticated: false,
         user: null,
       };
+    case "STOP_LOADING":
+      return { ...state, loading: false };
     default:
       throw new Error("Unknown Action: " + type);
   }
 };
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [state, dispatch] = useReducer(reducer, {
+  const [state, defaultDispatch] = useReducer(reducer, {
     user: null,
     authenticated: false,
+    loading: true,
   });
+
+  const dispatch = (type: string, payload?: any) =>
+    defaultDispatch({ type, payload });
+
+  useEffect(() => {
+    axios
+      .get("/auth/me")
+      .then((res) => dispatch("LOGIN", res.data))
+      .catch((err) => console.log(err))
+      .finally(() => dispatch("STOP_LOADING"));
+  }, []);
 
   return (
     <DispatchContext.Provider value={dispatch}>

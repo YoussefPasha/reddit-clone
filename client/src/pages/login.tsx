@@ -5,21 +5,27 @@ import axios from "axios";
 import { useRouter } from "next/router";
 
 import InputGroup from "../components/InputGroup";
+import { useAuthDispatch, useAuthState } from "../context/auth";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<any>({});
+  const dispatch = useAuthDispatch();
+  const { authenticated } = useAuthState();
   const router = useRouter();
+
+  if (authenticated) router.push("/");
 
   const submitForm = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
-      await axios.post("/auth/login", {
+      const res = await axios.post("/auth/login", {
         password,
         username,
       });
+      dispatch("LOGIN", res.data);
       router.push("/");
     } catch (error) {
       setErrors(error.response.data);
@@ -38,7 +44,7 @@ export default function Login() {
         <div className="w-70">
           <h1 className="mb-2 text-lg font-medium">Login</h1>
           <p className="mb-10 text-xs">
-            By continuing, you agree to our User Agreemet and Privacy Ploicy
+            By continuing, you agree to our User Agreement and Privacy Policy
           </p>
           <form onSubmit={submitForm}>
             <InputGroup
