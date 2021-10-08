@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Head from "next/head";
 import axios from "axios";
 import useSWR from "swr";
@@ -7,19 +7,10 @@ import PostCard from "../components/PostCard";
 import { Post } from "../types";
 
 export default function Home() {
-  // const [posts, setPosts] = useState<Post[]>([]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get("/posts")
-  //     .then((res) => setPosts(res.data))
-  //     .catch((err) => console.log(err));
-  // }, []);
-
   const { data: posts } = useSWR("/posts");
 
   return (
-    <div className="pt-12">
+    <Fragment>
       <Head>
         <title>readit: the front page of the internet</title>
       </Head>
@@ -32,7 +23,7 @@ export default function Home() {
         </div>
         {/* Sidebar */}
       </div>
-    </div>
+    </Fragment>
   );
 }
 

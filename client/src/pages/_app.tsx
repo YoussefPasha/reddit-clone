@@ -17,16 +17,27 @@ function App({ Component, pageProps }: AppProps) {
   const authRoutes = ["/login", "/register"];
   const authRoute = authRoutes.includes(pathname);
 
+  const fetcher = async (url: string) => {
+    try {
+      const res = await axios.get(url);
+      return res.data;
+    } catch (error) {
+      throw error.response.data;
+    }
+  };
+
   return (
     <SWRConfig
       value={{
-        fetcher: (url) => axios.get(url).then((res) => res.data),
+        fetcher,
         dedupingInterval: 1000,
       }}
     >
       <AuthProvider>
         {!authRoute && <Navbar />}
-        <Component {...pageProps} />
+        <div className={authRoute ? "" : "pt-12"}>
+          <Component {...pageProps} />
+        </div>
       </AuthProvider>
     </SWRConfig>
   );
