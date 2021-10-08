@@ -7,15 +7,15 @@ import {
 import { classToPlain, Exclude } from "class-transformer";
 
 export default abstract class Entity extends BaseEntity {
+  @Exclude()
   @PrimaryGeneratedColumn()
-  @Exclude({ toPlainOnly: true })
   id: number;
 
   @CreateDateColumn()
-  createAt: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updateAt: Date;
+  updatedAt: Date;
 
   toJSON() {
     return classToPlain(this);

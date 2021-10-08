@@ -4,7 +4,7 @@
    "port": "5432",
    "username": "postgres",
    "password": "pasha",
-   "database": "readit",
+   "database": "reddit",
    "synchronize": false,
    "logging": true,
    "entities": [
@@ -15,6 +15,9 @@
    ],
    "subscribers": [
       "src/subscribers/**/*.ts"
+   ],
+   "seeds": [
+      "src/seeds/**/*{.ts,.js}"
    ],
    "cli": {
       "entitiesDir": "src/entities",

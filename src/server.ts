@@ -12,6 +12,7 @@ import authRoutes from "./routes/auth";
 import postRoutes from "./routes/posts";
 import subRoutes from "./routes/subs";
 import miscRoutes from "./routes/misc";
+
 import trim from "./middleware/trim";
 
 const app = express();
@@ -36,11 +37,12 @@ app.use("/api/subs", subRoutes);
 app.use("/api/misc", miscRoutes);
 
 app.listen(PORT, async () => {
-  console.log("running...");
+  console.log(`Server running at http://localhost:${PORT}`);
+
   try {
     await createConnection();
-    console.log(`db connected ${PORT}`);
-  } catch (error) {
-    console.log(error);
+    console.log("Database connected!");
+  } catch (err) {
+    console.log(err);
   }
 });

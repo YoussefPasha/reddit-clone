@@ -9,7 +9,8 @@ export default async (_: Request, res: Response, next: NextFunction) => {
     if (!user) throw new Error("Unauthenticated");
 
     return next();
-  } catch (error) {
-    return res.status(401).json({ error: error.message });
+  } catch (err) {
+    console.log(err);
+    return res.status(401).json({ error: "Unauthenticated" });
   }
 };

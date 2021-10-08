@@ -1,22 +1,23 @@
 import {
-  Entity as TOENTITY,
+  Entity as TOEntity,
   Column,
   Index,
+  BeforeInsert,
   ManyToOne,
   JoinColumn,
-  BeforeInsert,
   OneToMany,
   AfterLoad,
 } from "typeorm";
 import { Exclude, Expose } from "class-transformer";
-import { makeId, slugify } from "../utils/helpers";
-import Comment from "./Comment";
+
 import Entity from "./Entity";
-import Sub from "./Sub";
 import User from "./User";
+import { makeId, slugify } from "../utils/helpers";
+import Sub from "./Sub";
+import Comment from "./Comment";
 import Vote from "./Vote";
 
-@TOENTITY("posts")
+@TOEntity("posts")
 export default class Post extends Entity {
   constructor(post: Partial<Post>) {
     super();
@@ -25,7 +26,7 @@ export default class Post extends Entity {
 
   @Index()
   @Column()
-  identifier: string;
+  identifier: string; // 7 Character Id
 
   @Column()
   title: string;
@@ -34,12 +35,18 @@ export default class Post extends Entity {
   @Column()
   slug: string;
 
-  @ManyToOne(() => User, (user) => user.posts)
-  @JoinColumn({ name: "username", referencedColumnName: "username" })
-  user: User;
+  @Column({ nullable: true, type: "text" })
+  body: string;
+
+  @Column()
+  subName: string;
 
   @Column()
   username: string;
+
+  @ManyToOne(() => User, (user) => user.posts)
+  @JoinColumn({ name: "username", referencedColumnName: "username" })
+  user: User;
 
   @ManyToOne(() => Sub, (sub) => sub.posts)
   @JoinColumn({ name: "subName", referencedColumnName: "name" })
@@ -67,15 +74,9 @@ export default class Post extends Entity {
 
   protected userVote: number;
   setUserVote(user: User) {
-    const index = this.votes?.findIndex((v) => v.username == user.username);
+    const index = this.votes?.findIndex((v) => v.username === user.username);
     this.userVote = index > -1 ? this.votes[index].value : 0;
   }
-
-  @Column({ nullable: true, type: "text" })
-  body: string;
-
-  @Column()
-  subName: string;
 
   @BeforeInsert()
   makeIdAndSlug() {

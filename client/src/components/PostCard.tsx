@@ -30,7 +30,7 @@ const PostCard = ({
     title,
     body,
     subName,
-    createAt,
+    createdAt,
     voteScore,
     username,
     url,
@@ -102,7 +102,7 @@ const PostCard = ({
             </Link>
             <Link href={`/r/${subName}/${identifier}/${slug}`}>
               <a className="mx-1 hover:underline">
-                {dayjs(createAt).fromNow()}
+                {dayjs(createdAt).fromNow()}
               </a>
             </Link>
           </p>

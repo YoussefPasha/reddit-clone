@@ -13,6 +13,7 @@ export function slugify(str: string): string {
   str = str.trim();
   str = str.toLowerCase();
 
+  // remove accents, swap ñ for n, etc
   const from = "åàáãäâèéëêìíïîòóöôùúüûñç·/_,:;";
   const to = "aaaaaaeeeeiiiioooouuuunc------";
 
@@ -21,10 +22,10 @@ export function slugify(str: string): string {
   }
 
   return str
-    .replace(/[^a-z0-9 -]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-+/, "")
-    .replace(/-+$/, "")
+    .replace(/[^a-z0-9 -]/g, "") // remove invalid chars
+    .replace(/\s+/g, "-") // collapse whitespace and replace by -
+    .replace(/-+/g, "-") // collapse dashes
+    .replace(/^-+/, "") // trim - from start of text
+    .replace(/-+$/, "") // trim - from end of text
     .replace(/-/g, "_");
 }

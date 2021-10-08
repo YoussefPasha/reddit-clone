@@ -1,12 +1,13 @@
 import {
   BeforeInsert,
   Column,
-  Entity as TOENTITY,
+  Entity as TOEntity,
   Index,
   JoinColumn,
   ManyToOne,
   OneToMany,
 } from "typeorm";
+
 import Entity from "./Entity";
 import Post from "./Post";
 import User from "./User";
@@ -15,12 +16,13 @@ import { makeId } from "../utils/helpers";
 import Vote from "./Vote";
 import { Exclude } from "class-transformer";
 
-@TOENTITY("comments")
+@TOEntity("comments")
 export default class Comment extends Entity {
   constructor(comment: Partial<Comment>) {
     super();
     Object.assign(this, comment);
   }
+
   @Index()
   @Column()
   identifier: string;
@@ -44,7 +46,7 @@ export default class Comment extends Entity {
 
   protected userVote: number;
   setUserVote(user: User) {
-    const index = this.votes?.findIndex((v) => v.username == user.username);
+    const index = this.votes?.findIndex((v) => v.username === user.username);
     this.userVote = index > -1 ? this.votes[index].value : 0;
   }
 
