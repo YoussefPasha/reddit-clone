@@ -26,7 +26,7 @@ export default function Login() {
         username,
       });
       dispatch("LOGIN", res.data);
-      router.push("/");
+      router.back();
     } catch (error) {
       setErrors(error.response.data);
     }
