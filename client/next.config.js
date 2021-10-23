@@ -10,6 +10,6 @@ module.exports = {
     return config;
   }, // next.config.js
   images: {
-    domains: ["www.gravatar.com", "localhost", "http:localhost:5000"],
+    domains: ["www.gravatar.com", "localhost", "http:localhost:5001"],
   },
 };
