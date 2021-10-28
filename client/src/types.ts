@@ -32,8 +32,19 @@ export interface Sub {
   bannerUrn: string;
   username: string;
   posts: Post[];
-  // Virtuals
+  // Virtual
   imageUrl: string;
   bannerUrl: string;
   postCount?: number;
+}
+
+export interface Comment {
+  identifier: string;
+  body: string;
+  username: string;
+  createdAt: string;
+  updatedAt: string;
+  // Virtual
+  userVote: number;
+  voteScore: number;
 }
