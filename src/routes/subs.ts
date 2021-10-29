@@ -142,20 +142,23 @@ const uploadSubImage = async (req: Request, res: Response) => {
 const searchSubs = async (req: Request, res: Response) => {
   try {
     const name = req.params.name;
+
     if (isEmpty(name)) {
-      res.status(400).json({ error: "Name must not be empty" });
+      return res.status(400).json({ error: "Name must not be empty" });
     }
 
+    // reactJS , reactjs
     const subs = await getRepository(Sub)
       .createQueryBuilder()
-      .where("LOWER(name) LIKE:name", {
+      // react => rea
+      .where("LOWER(name) LIKE :name", {
         name: `${name.toLowerCase().trim()}%`,
       })
       .getMany();
 
     return res.json(subs);
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
     return res.status(500).json({ error: "Something went wrong" });
   }
 };
