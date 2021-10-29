@@ -35,7 +35,7 @@ const Navbar: React.FC = () => {
     }
     const searchSubs = async () => {
       clearTimeout(timer);
-      let timeoutId: null | ReturnType<typeof setTimeout> = null;
+      let timeoutId: any = null;
       timeoutId = setTimeout(async () => {
         try {
           const { data } = await axios.get(`/subs/search/${name}`);
